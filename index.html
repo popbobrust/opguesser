@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>R6 Multiplayer Operator Guesser</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <h1>R6 Multiplayer Operator Guesser</h1>
+    <p class="subtitle">One host, 10 questions, everyone guesses. Host manually eliminates operators.</p>
+
+    <section class="room-section">
+      <input id="playerName" placeholder="Your name (optional)" />
+      <input id="roomCode" placeholder="Room code (e.g. r6-1)" />
+      <button id="joinRoomBtn">Join Room</button>
+      <span id="connectionStatus"></span>
+    </section>
+
+    <section id="gameSection" style="display:none;">
+      <div class="top-bar">
+        <div>
+          Room: <span id="roomLabel"></span> •
+          Host: <span id="hostLabel">None</span> •
+          You: <span id="youLabel"></span>
+        </div>
+        <div>
+          Questions left: <span id="questionCountLabel">10</span>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <button id="becomeHostBtn">Become Host</button>
+        <button id="startRoundBtn">Start New Round</button>
+        <button id="revealBtn">Reveal Operator</button>
+      </div>
+
+      <div id="hostHint" class="host-hint">
+        You are the host. Secretly pick an operator (in your head). Click operators to eliminate them as you answer questions.
+      </div>
+
+      <section class="questions-section">
+        <h2>Questions</h2>
+        <div class="ask-row">
+          <input id="questionInput" placeholder="Ask a question..." />
+          <button id="askBtn">Ask</button>
+        </div>
+        <ul id="questionList"></ul>
+      </section>
+
+      <section class="operators-section">
+        <h2>Operators</h2>
+        <p class="hint">Host can click operators to eliminate/restore them. Everyone sees the changes.</p>
+        <div id="operatorsGrid" class="operators-grid"></div>
+      </section>
+
+      <section class="reveal-section">
+        <h2>Reveal</h2>
+        <p id="revealText">No operator revealed yet.</p>
+      </section>
+    </section>
+  </div>
+
+  <!-- Ably SDK -->
+  <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+  <script src="operators.js"></script>
+  <script src="ably.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
