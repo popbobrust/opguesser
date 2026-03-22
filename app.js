@@ -205,8 +205,17 @@ function joinRoom() {
 
 function becomeHost() {
   const name = playerNameInput.value.trim() || clientId;
-  sendMessage("become_host", { hostId: clientId, hostName: name });
+
+  // If you're already host, ignore
+  if (isHost) return;
+
+  // Ask the current host for permission
+  sendMessage("request_host", {
+    requesterId: clientId,
+    requesterName: name
+  });
 }
+
 
 function startNewRound() {
   if (!isHost) return;
@@ -321,6 +330,18 @@ function handleMessage(type, data) {
       updateHostUI();
       break;
     }
+    case "request_host": {
+      if (isHost) {
+        const accept = confirm(`${data.requesterName} wants to become host. Allow?`);
+        if (accept) {
+          sendMessage("become_host", {
+          hostId: data.requesterId,
+          hostName: data.requesterName
+        });
+      }
+    }
+  break;
+}
 
     default:
       break;
