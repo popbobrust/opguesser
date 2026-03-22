@@ -179,7 +179,9 @@ function joinRoom() {
   channel.subscribe((msg) => {
     handleMessage(msg.name, msg.data);
   });
-
+  
+  sendMessage("request_state", {});
+  
   channel.attach((err) => {
     if (err) {
       connectionStatus.textContent = "Error connecting.";
@@ -261,6 +263,7 @@ function handleMessage(type, data) {
       updateHostUI();
       break;
     }
+    
     case "ask_question": {
       state.questions.push({
         id: data.id,
@@ -297,6 +300,18 @@ function handleMessage(type, data) {
       renderReveal();
       break;
     }
+    case "request_state": {
+      if (isHost) {
+        sendMessage("full_state", { state });
+      }
+      break;
+    }
+    case "full_state": {
+      state = data.state;
+      updateHostUI();
+      break;
+    }
+
     default:
       break;
   }
