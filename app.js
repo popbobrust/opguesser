@@ -53,6 +53,16 @@ function updateHostUI() {
   // Host-only buttons
   startRoundBtn.disabled = !isHost;
   revealBtn.disabled = !isHost;
+  // Host-only UI
+  if (isHost) {
+    startRoundBtn.style.display = "inline-block";
+    revealBtn.style.display = "inline-block";
+    hostHint.style.display = "block";
+  } else {
+  startRoundBtn.style.display = "none";
+  revealBtn.style.display = "none";
+  hostHint.style.display = "none";
+}
 
   renderQuestions();
   renderOperators();
