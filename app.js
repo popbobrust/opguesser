@@ -209,12 +209,22 @@ function becomeHost() {
   // If you're already host, ignore
   if (isHost) return;
 
-  // Ask the current host for permission
+  // If there is NO host yet → instantly become host
+  if (!state.hostId) {
+    sendMessage("become_host", {
+      hostId: clientId,
+      hostName: name
+    });
+    return;
+  }
+
+  // Otherwise → request permission from current host
   sendMessage("request_host", {
     requesterId: clientId,
     requesterName: name
   });
 }
+
 
 
 function startNewRound() {
