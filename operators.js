@@ -1,143 +1,77 @@
 const OPERATORS = [
-  // Y1S1
-  { name: "Sledge", side: "Attacker", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["breach", "soft-breach"] },
-  { name: "Thatcher", side: "Attacker", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["emp", "utility-denial"] },
-  { name: "Ash", side: "Attacker", speed: 3, armor: 1, season: "Y1S1", gadgetTags: ["ranged-breach", "soft-breach"] },
-  { name: "Thermite", side: "Attacker", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["hard-breach"] },
-  { name: "Montagne", side: "Attacker", speed: 1, armor: 3, season: "Y1S1", gadgetTags: ["shield"] },
-  { name: "Twitch", side: "Attacker", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["drone", "electronics"] },
-
-  { name: "Smoke", side: "Defender", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["smoke", "area-denial"] },
-  { name: "Mute", side: "Defender", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["jammer", "intel-denial"] },
-  { name: "Castle", side: "Defender", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["barricade"] },
-  { name: "Pulse", side: "Defender", speed: 3, armor: 1, season: "Y1S1", gadgetTags: ["heartbeat", "intel"] },
-  { name: "Doc", side: "Defender", speed: 1, armor: 3, season: "Y1S1", gadgetTags: ["heal", "stim"] },
-  { name: "Rook", side: "Defender", speed: 1, armor: 3, season: "Y1S1", gadgetTags: ["armor"] },
-  { name: "Jäger", side: "Defender", speed: 2, armor: 2, season: "Y1S1", gadgetTags: ["ads", "projectile-denial"] },
-  { name: "Bandit", side: "Defender", speed: 3, armor: 1, season: "Y1S1", gadgetTags: ["electric", "wall-denial"] },
-
-  // Y1S2
-  { name: "Buck", side: "Attacker", speed: 2, armor: 2, season: "Y1S2", gadgetTags: ["soft-breach", "shotgun"] },
-  { name: "Frost", side: "Defender", speed: 2, armor: 2, season: "Y1S2", gadgetTags: ["trap"] },
-
-  // Y1S3
-  { name: "Blackbeard", side: "Attacker", speed: 2, armor: 2, season: "Y1S3", gadgetTags: ["shield", "gunshield"] },
-  { name: "Valkyrie", side: "Defender", speed: 2, armor: 2, season: "Y1S3", gadgetTags: ["camera", "intel"] },
-
-  // Y1S4
-  { name: "Capitão", side: "Attacker", speed: 3, armor: 1, season: "Y1S4", gadgetTags: ["fire", "smoke"] },
-  { name: "Caveira", side: "Defender", speed: 3, armor: 1, season: "Y1S4", gadgetTags: ["stealth", "interrogation"] },
-
-  // Y2S1
-  { name: "Hibana", side: "Attacker", speed: 3, armor: 1, season: "Y2S1", gadgetTags: ["hard-breach"] },
-  { name: "Echo", side: "Defender", speed: 1, armor: 3, season: "Y2S1", gadgetTags: ["drone", "stun"] },
-
-  // Y2S2
-  { name: "Jackal", side: "Attacker", speed: 2, armor: 2, season: "Y2S2", gadgetTags: ["tracker", "footsteps"] },
-  { name: "Mira", side: "Defender", speed: 1, armor: 3, season: "Y2S2", gadgetTags: ["vision", "window"] },
-
-  // Y2S3
-  { name: "Ying", side: "Attacker", speed: 2, armor: 2, season: "Y2S3", gadgetTags: ["flash", "crowd-control"] },
-  { name: "Lesion", side: "Defender", speed: 2, armor: 2, season: "Y2S3", gadgetTags: ["trap", "poison"] },
-
-  // Y2S4
-  { name: "Dokkaebi", side: "Attacker", speed: 2, armor: 2, season: "Y2S4", gadgetTags: ["phone", "intel"] },
-  { name: "Vigil", side: "Defender", speed: 3, armor: 1, season: "Y2S4", gadgetTags: ["stealth"] },
-
-  // Y3S1
-  { name: "Lion", side: "Attacker", speed: 2, armor: 2, season: "Y3S1", gadgetTags: ["scan", "global"] },
-  { name: "Finka", side: "Attacker", speed: 2, armor: 2, season: "Y3S1", gadgetTags: ["buff", "heal"] },
-
-  // Y3S2
-  { name: "Maestro", side: "Defender", speed: 1, armor: 3, season: "Y3S2", gadgetTags: ["camera", "laser"] },
-  { name: "Alibi", side: "Defender", speed: 3, armor: 1, season: "Y3S2", gadgetTags: ["decoy"] },
-
-  // Y3S3
-  { name: "Maverick", side: "Attacker", speed: 3, armor: 1, season: "Y3S3", gadgetTags: ["breach", "torch"] },
-
-  // Y3S4
-  { name: "Nomad", side: "Attacker", speed: 2, armor: 2, season: "Y3S4", gadgetTags: ["airjab", "push"] },
-  { name: "Kaid", side: "Defender", speed: 1, armor: 3, season: "Y3S4", gadgetTags: ["electric"] },
-
-  // Y4S1
-  { name: "Gridlock", side: "Attacker", speed: 1, armor: 3, season: "Y4S1", gadgetTags: ["trap"] },
-  { name: "Mozzie", side: "Defender", speed: 2, armor: 2, season: "Y4S1", gadgetTags: ["drone-hack"] },
-
-  // Y4S2
-  { name: "Nøkk", side: "Attacker", speed: 3, armor: 1, season: "Y4S2", gadgetTags: ["stealth"] },
-  { name: "Warden", side: "Defender", speed: 2, armor: 2, season: "Y4S2", gadgetTags: ["vision"] },
-
-  // Y4S3
-  { name: "Amaru", side: "Attacker", speed: 2, armor: 2, season: "Y4S3", gadgetTags: ["mobility"] },
-  { name: "Goyo", side: "Defender", speed: 2, armor: 2, season: "Y4S3", gadgetTags: ["fire"] },
-
-  // Y4S4
-  { name: "Kali", side: "Attacker", speed: 2, armor: 2, season: "Y4S4", gadgetTags: ["sniper", "utility-denial"] },
-  { name: "Wamai", side: "Defender", speed: 2, armor: 2, season: "Y4S4", gadgetTags: ["projectile-denial"] },
-
-  // Y5S1
-  { name: "Iana", side: "Attacker", speed: 2, armor: 2, season: "Y5S1", gadgetTags: ["clone", "intel"] },
-  { name: "Oryx", side: "Defender", speed: 2, armor: 2, season: "Y5S1", gadgetTags: ["mobility"] },
-
-  // Y5S2
-  { name: "Ace", side: "Attacker", speed: 2, armor: 2, season: "Y5S2", gadgetTags: ["hard-breach"] },
-  { name: "Melusi", side: "Defender", speed: 3, armor: 1, season: "Y5S2", gadgetTags: ["slow", "trap"] },
-
-  // Y5S3
-  { name: "Zero", side: "Attacker", speed: 2, armor: 2, season: "Y5S3", gadgetTags: ["camera", "intel"] },
-
-  // Y5S4
-  { name: "Aruni", side: "Defender", speed: 2, armor: 2, season: "Y5S4", gadgetTags: ["laser-gate"] },
-
-  // Y6S1
-  { name: "Flores", side: "Attacker", speed: 2, armor: 2, season: "Y6S1", gadgetTags: ["explosive-drone"] },
-
-  // Y6S2
-  { name: "Thunderbird", side: "Defender", speed: 3, armor: 1, season: "Y6S2", gadgetTags: ["heal"] },
-
-  // Y6S3
-  { name: "Osa", side: "Attacker", speed: 2, armor: 2, season: "Y6S3", gadgetTags: ["shield", "vision"] },
-
-  // Y6S4
-  { name: "Thorn", side: "Defender", speed: 2, armor: 2, season: "Y6S4", gadgetTags: ["trap"] },
-
-  // Y7S1
-  { name: "Azami", side: "Defender", speed: 2, armor: 2, season: "Y7S1", gadgetTags: ["barrier"] },
-
-  // Y7S2
-  { name: "Sens", side: "Attacker", speed: 2, armor: 2, season: "Y7S2", gadgetTags: ["vision-block"] },
-
-  // Y7S3
-  { name: "Grim", side: "Attacker", speed: 3, armor: 1, season: "Y7S3", gadgetTags: ["tracker", "swarm"] },
-
-  // Y7S4
-  { name: "Solis", side: "Defender", speed: 3, armor: 1, season: "Y7S4", gadgetTags: ["electronics", "intel"] },
-
-  // Y8S1
-  { name: "Brava", side: "Attacker", speed: 2, armor: 2, season: "Y8S1", gadgetTags: ["drone-hack"] },
-
-  // Y8S2
-  { name: "Fenrir", side: "Defender", speed: 2, armor: 2, season: "Y8S2", gadgetTags: ["fear", "trap"] },
-
-  // Y8S3
-  { name: "Ram", side: "Attacker", speed: 2, armor: 2, season: "Y8S3", gadgetTags: ["breach", "drone"] },
-
-  // Y8S4
-  { name: "Tubarao", side: "Defender", speed: 2, armor: 2, season: "Y8S4", gadgetTags: ["freeze", "area-denial"] },
-
-  // Y9S1
-  { name: "Deimos", side: "Attacker", speed: 2, armor: 2, season: "Y9S1", gadgetTags: ["tracker", "intel"] },
-
-  // Y9S2 (latest)
-  { name: "Striker", side: "Defender", speed: 2, armor: 2, season: "Y9S2", gadgetTags: ["area-denial", "utility"] },
-
-  // Y9S3 – Denari
-{ name: "Denari", side: "Attacker", speed: 2, armor: 2, season: "Y9S3", gadgetTags: ["intel", "tracking", "support"] },
-
-// Y9S4 – Rauora
-{ name: "Rauora", side: "Defender", speed: 2, armor: 2, season: "Y9S4", gadgetTags: ["area-denial", "utility", "trap"] },
-
-// Y10S1 – Solid Snake
-{ name: "Solid Snake", side: "Attacker", speed: 3, armor: 1, season: "Y10S1", gadgetTags: ["stealth", "intel", "mobility"] },
-
+{name:"Striker",side:"Attacker",gender:"Male",uniqueWeapon:false,squad:"N/A",role:"n/a",speed:2,armor:2,season:"Y0"},
+{name:"Sentry",side:"Defender",gender:"Male",uniqueWeapon:false,squad:"N/A",role:"n/a",speed:2,armor:2,season:"Y0"},
+{name:"Sledge",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"SAS",role:"soft-breach",speed:2,armor:2,season:"Y1S1"},
+{name:"Thatcher",side:"Attacker",gender:"Male",uniqueWeapon:false,squad:"SAS",role:"gadget-denial",speed:2,armor:2,season:"Y1S1"},
+{name:"Ash",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"FBI SWAT",role:"soft-breach",speed:3,armor:1,season:"Y1S1"},
+{name:"Thermite",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"FBI SWAT",role:"hard-breach",speed:2,armor:2,season:"Y1S1"},
+{name:"Montagne",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"GIGN",role:"shield",speed:1,armor:3,season:"Y1S1"},
+{name:"Twitch",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"GIGN",role:"gadget-denial",speed:2,armor:2,season:"Y1S1"},
+{name:"Blitz",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"GSG9",role:"shield",speed:2,armor:2,season:"Y1S1"},
+{name:"IQ",side:"Attacker",gender:"Female",uniqueWeapon:false,squad:"GSG9",role:"intel",speed:3,armor:1,season:"Y1S1"},
+{name:"Fuze",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"Spetsnaz",role:"area-denial",speed:1,armor:3,season:"Y1S1"},
+{name:"Glaz",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"Spetsnaz",role:"intel",speed:2,armor:2,season:"Y1S1"},
+{name:"Smoke",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"SAS",role:"area-denial",speed:2,armor:2,season:"Y1S1"},
+{name:"Mute",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"SAS",role:"gadget-denial",speed:2,armor:2,season:"Y1S1"},
+{name:"Castle",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"FBI SWAT",role:"area-denial",speed:2,armor:2,season:"Y1S1"},
+{name:"Pulse",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"FBI SWAT",role:"intel",speed:3,armor:1,season:"Y1S1"},
+{name:"Doc",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"GIGN",role:"support",speed:1,armor:3,season:"Y1S1"},
+{name:"Rook",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"GIGN",role:"support",speed:1,armor:3,season:"Y1S1"},
+{name:"Jäger",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"GSG9",role:"gadget-denial",speed:2,armor:2,season:"Y1S1"},
+{name:"Bandit",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"GSG9",role:"gadget-denial",speed:3,armor:1,season:"Y1S1"},
+{name:"Kapkan",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"Spetsnaz",role:"area-denial",speed:2,armor:2,season:"Y1S1"},
+{name:"Tachanka",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"Spetsnaz",role:"area-denial",speed:1,armor:3,season:"Y1S1"},
+{name:"Buck",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"JTF2",role:"soft-breach",speed:2,armor:2,season:"Y1S2"},
+{name:"Frost",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"JTF2",role:"trap",speed:2,armor:2,season:"Y1S2"},
+{name:"Blackbeard",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"Navy SEALs",role:"shield-gun",speed:2,armor:2,season:"Y1S3"},
+{name:"Valkyrie",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"Navy SEALs",role:"intel",speed:2,armor:2,season:"Y1S3"},
+{name:"Capitão",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"BOPE",role:"area-denial",speed:3,armor:1,season:"Y1S4"},
+{name:"Caveira",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"BOPE",role:"stealth",speed:3,armor:1,season:"Y1S4"},
+{name:"Hibana",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"SAT",role:"hard-breach",speed:3,armor:1,season:"Y2S1"},
+{name:"Echo",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"SAT",role:"intel",speed:1,armor:3,season:"Y2S1"},
+{name:"Jackal",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"GEO",role:"tracking",speed:2,armor:2,season:"Y2S2"},
+{name:"Mira",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"GEO",role:"vision-control",speed:1,armor:3,season:"Y2S2"},
+{name:"Ying",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"SDU",role:"crowd-control",speed:2,armor:2,season:"Y2S3"},
+{name:"Lesion",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"SDU",role:"poison-trap",speed:2,armor:2,season:"Y2S3"},
+{name:"Dokkaebi",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"707th SMB",role:"intel-disruption",speed:2,armor:2,season:"Y2S4"},
+{name:"Vigil",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"707th SMB",role:"stealth",speed:3,armor:1,season:"Y2S4"},
+{name:"Lion",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"CBRN",role:"global-scan",speed:2,armor:2,season:"Y3S1"},
+{name:"Finka",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"CBRN",role:"buff",speed:2,armor:2,season:"Y3S1"},
+{name:"Maestro",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"GIS",role:"intel-denial",speed:1,armor:3,season:"Y3S2"},
+{name:"Alibi",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"GIS",role:"decoy",speed:3,armor:1,season:"Y3S2"},
+{name:"Maverick",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"Delta Force",role:"hard-breach",speed:3,armor:1,season:"Y3S3"},
+{name:"Clash",side:"Defense",gender:"Female",uniqueWeapon:true,squad:"Delta Force",role:"shield",speed:3,armor:1,season:"Y3S3"},
+{name:"Nomad",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"GIGR",role:"area-denial",speed:2,armor:2,season:"Y3S4"},
+{name:"Kaid",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"GIGR",role:"gadget-denial",speed:1,armor:3,season:"Y3S4"},
+{name:"Gridlock",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"SASR",role:"area-denial",speed:1,armor:3,season:"Y4S1"},
+{name:"Mozzie",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"SASR",role:"gadget-denial",speed:2,armor:2,season:"Y4S1"},
+{name:"Nøkk",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"Jaeger Corps",role:"n/a",speed:3,armor:1,season:"Y4S2"},
+{name:"Warden",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"Secret Service",role:"vision-control",speed:2,armor:2,season:"Y4S2"},
+{name:"Amaru",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"APCA",role:"mobility",speed:2,armor:2,season:"Y4S3"},
+{name:"Goyo",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"FES",role:"area-denial",speed:2,armor:2,season:"Y4S3"},
+{name:"Kali",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"NIGHTHAVEN",role:"gadget-denial",speed:2,armor:2,season:"Y4S4"},
+{name:"Wamai",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"NIGHTHAVEN",role:"gadget-denial",speed:2,armor:2,season:"Y4S4"},
+{name:"Iana",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"REU",role:"intel",speed:2,armor:2,season:"Y5S1"},
+{name:"Oryx",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"UNAFFILIATED",role:"movement",speed:2,armor:2,season:"Y5S1"},
+{name:"Ace",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"NIGHTHAVEN",role:"hard-breach",speed:2,armor:2,season:"Y5S2"},
+{name:"Melusi",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"INKABA",role:"area-denial",speed:3,armor:1,season:"Y5S2"},
+{name:"Zero",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"CIA",role:"intel",speed:2,armor:2,season:"Y5S3"},
+{name:"Aruni",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"NIGHTHAVEN",role:"gadget-denial",speed:2,armor:2,season:"Y5S4"},
+{name:"Flores",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"UNAFFILIATED",role:"gagdet-denial/soft-breach",speed:2,armor:2,season:"Y6S1"},
+{name:"Thunderbird",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"Nakoda",role:"heal",speed:3,armor:1,season:"Y6S2"},
+{name:"Osa",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"NIGHTHAVEN",role:"shield",speed:2,armor:2,season:"Y6S3"},
+{name:"Thorn",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"Garda ERU",role:"area-denial",speed:2,armor:2,season:"Y6S4"},
+{name:"Azami",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"UNAFFILIATED",role:"barrier",speed:2,armor:2,season:"Y7S1"},
+{name:"Sens",side:"Attacker",gender:"Nonbinary",uniqueWeapon:true,squad:"NIGHTHAVEN",role:"vision-block",speed:2,armor:2,season:"Y7S2"},
+{name:"Grim",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"NIGHTHAVEN",role:"swarm-tracking",speed:3,armor:1,season:"Y7S3"},
+{name:"Solis",side:"Defender",gender:"Female",uniqueWeapon:true,squad:"UNAFFILIATED",role:"electronics-intel",speed:3,armor:1,season:"Y7S4"},
+{name:"Brava",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"Viperstrike",role:"drone-hack",speed:2,armor:2,season:"Y8S1"},
+{name:"Fenrir",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"UNAFFILIATED",role:"fear-trap",speed:2,armor:2,season:"Y8S2"},
+{name:"Ram",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"UNAFFILIATED",role:"breach-drone",speed:2,armor:2,season:"Y8S3"},
+{name:"Tubarao",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"UNAFFILIATED",role:"freeze-denial",speed:2,armor:2,season:"Y8S4"},
+{name:"Deimos",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"UNAFFILIATED",role:"intel-tracker",speed:2,armor:2,season:"Y9S1"},
+{name:"Striker",side:"Attacker",gender:"Male",uniqueWeapon:false,squad:"N/A",role:"general-attack",speed:2,armor:2,season:"Y9S2"},
+{name:"Denari",side:"Attacker",gender:"Female",uniqueWeapon:true,squad:"UNAFFILIATED",role:"intel",speed:2,armor:2,season:"Y9S3"},
+{name:"Rauora",side:"Defender",gender:"Male",uniqueWeapon:true,squad:"UNAFFILIATED",role:"trap",speed:2,armor:2,season:"Y9S4"},
+{name:"Solid Snake",side:"Attacker",gender:"Male",uniqueWeapon:true,squad:"UNAFFILIATED",role:"stealth",speed:3,armor:1,season:"Y10S1"}
 ];
