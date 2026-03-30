@@ -1,14 +1,13 @@
-/* GLOBAL RAINBOW + COMIC SANS */
 * {
   box-sizing: border-box;
-  font-family: "Comic Sans MS", "Comic Sans", cursive !important;
-  animation: rainbowShift 4s linear infinite;
-}
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
-/* RAINBOW ANIMATION */
-@keyframes rainbowShift {
-  0%   { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+
+
+
+
+
+
 }
 
 body {
