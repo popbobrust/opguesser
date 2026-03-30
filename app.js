@@ -141,7 +141,10 @@ function renderOperators() {
 
     const metaDiv = document.createElement("div");
     metaDiv.className = "operator-meta";
-    metaDiv.textContent = `${op.side} • ${op.speed}-speed / ${op.armor}-armor • ${op.season}`;
+    metaDiv.textContent =
+  `${op.side} • ${op.role} • ${op.speed}-speed / ${op.armor}-armor • ` +
+  `${op.uniqueWeapon ? "Unique Weapon" : "No Unique Weapon"} • ${op.season}`;
+
 
     card.appendChild(nameDiv);
     card.appendChild(metaDiv);
