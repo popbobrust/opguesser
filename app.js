@@ -1,3 +1,4 @@
+
 // Basic local identity
 const clientId = Math.random().toString(36).slice(2, 10);
 
@@ -26,12 +27,6 @@ const revealText = document.getElementById("revealText");
 
 let channel = null;
 let currentRoom = null;
-let hideAttackers = false;
-let hideDefenders = false;
-let hideMale = false;
-let hideFemale = false;
-let hideUnique = false;
-let hideNonUnique = false;
 
 // Shared game state (synced via messages)
 let state = {
@@ -75,50 +70,63 @@ function updateHostUI() {
   renderReveal();
 }
 
-function renderOperators() {
-  operatorsGrid.innerHTML = "";
+function renderQuestions() {
+  questionListEl.innerHTML = "";
+  state.questions.forEach((q) => {
+    const li = document.createElement("li");
+    li.className = "question-item";
 
-  OPERATORS.forEach((op) => {
-
-    // --- FILTER LOGIC ---
-    if (hideAttackers && op.side === "Attacker") return;
-    if (hideDefenders && op.side === "Defender") return;
-
-    if (hideMale && op.gender === "Male") return;
-    if (hideFemale && op.gender === "Female") return;
-
-    if (hideUnique && op.uniqueWeapon === true) return;
-    if (hideNonUnique && op.uniqueWeapon === false) return;
-
-    // --- CARD CREATION ---
-    const card = document.createElement("div");
-    card.className = "operator-card";
-    if (isHost) card.classList.add("host-clickable");
-    if (state.eliminated[op.name]) card.classList.add("eliminated");
-
-    const nameDiv = document.createElement("div");
-    nameDiv.className = "operator-name";
-    nameDiv.textContent = op.name;
+    const textDiv = document.createElement("div");
+    textDiv.className = "question-text";
+    textDiv.textContent = q.text;
 
     const metaDiv = document.createElement("div");
-    metaDiv.className = "operator-meta";
-    metaDiv.textContent =
-      `${op.side} • ${op.role} • ${op.speed}-speed / ${op.armor}-armor • ` +
-      `${op.uniqueWeapon ? "Unique Weapon" : "No Unique Weapon"} • ${op.season}`;
+    metaDiv.className = "question-meta";
+    metaDiv.textContent = q.askedByName
+      ? `by ${q.askedByName}`
+      : "";
 
-    card.appendChild(nameDiv);
-    card.appendChild(metaDiv);
+    const rightSide = document.createElement("div");
+    rightSide.style.display = "flex";
+    rightSide.style.alignItems = "center";
 
-    if (isHost) {
-      card.onclick = () => {
-        sendToggleEliminate(op.name);
-      };
+    if (q.answer) {
+      const ansSpan = document.createElement("span");
+      ansSpan.style.marginLeft = "8px";
+      ansSpan.style.fontSize = "0.8rem";
+      ansSpan.textContent = `Answer: ${q.answer.toUpperCase()}`;
+      rightSide.appendChild(ansSpan);
+    } else if (isHost) {
+      const btns = document.createElement("div");
+      btns.className = "answer-buttons";
+
+      const yesBtn = document.createElement("button");
+      yesBtn.className = "answer-yes";
+      yesBtn.textContent = "Yes";
+      yesBtn.onclick = () => sendAnswer(q.id, "yes");
+
+      const noBtn = document.createElement("button");
+      noBtn.className = "answer-no";
+      noBtn.textContent = "No";
+      noBtn.onclick = () => sendAnswer(q.id, "no");
+
+      const irrelBtn = document.createElement("button");
+      irrelBtn.className = "answer-irrel";
+      irrelBtn.textContent = "Irrelevant";
+      irrelBtn.onclick = () => sendAnswer(q.id, "irrel");
+
+      btns.appendChild(yesBtn);
+      btns.appendChild(noBtn);
+      btns.appendChild(irrelBtn);
+      rightSide.appendChild(btns);
     }
 
-    operatorsGrid.appendChild(card);
+    li.appendChild(textDiv);
+    li.appendChild(metaDiv);
+    li.appendChild(rightSide);
+    questionListEl.appendChild(li);
   });
 }
-
 
 function renderOperators() {
   operatorsGrid.innerHTML = "";
@@ -185,9 +193,9 @@ function joinRoom() {
   channel.subscribe((msg) => {
     handleMessage(msg.name, msg.data);
   });
-  
+
   sendMessage("request_state", {});
-  
+
   channel.attach((err) => {
     if (err) {
       connectionStatus.textContent = "Error connecting.";
@@ -288,7 +296,7 @@ function handleMessage(type, data) {
       updateHostUI();
       break;
     }
-    
+
     case "ask_question": {
       state.questions.push({
         id: data.id,
@@ -363,47 +371,6 @@ revealBtn.addEventListener("click", revealOperator);
 askBtn.addEventListener("click", askQuestion);
 questionInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") askQuestion();
-});
-document.getElementById("toggleAttackersBtn").addEventListener("click", () => {
-  hideAttackers = !hideAttackers;
-  document.getElementById("toggleAttackersBtn").textContent =
-    hideAttackers ? "Show Attackers" : "Hide Attackers";
-  renderOperators();
-});
-
-document.getElementById("toggleDefendersBtn").addEventListener("click", () => {
-  hideDefenders = !hideDefenders;
-  document.getElementById("toggleDefendersBtn").textContent =
-    hideDefenders ? "Show Defenders" : "Hide Defenders";
-  renderOperators();
-});
-
-document.getElementById("toggleMaleBtn").addEventListener("click", () => {
-  hideMale = !hideMale;
-  document.getElementById("toggleMaleBtn").textContent =
-    hideMale ? "Show Male" : "Hide Male";
-  renderOperators();
-});
-
-document.getElementById("toggleFemaleBtn").addEventListener("click", () => {
-  hideFemale = !hideFemale;
-  document.getElementById("toggleFemaleBtn").textContent =
-    hideFemale ? "Show Female" : "Hide Female";
-  renderOperators();
-});
-
-document.getElementById("toggleUniqueBtn").addEventListener("click", () => {
-  hideUnique = !hideUnique;
-  document.getElementById("toggleUniqueBtn").textContent =
-    hideUnique ? "Show Unique Weapons" : "Hide Unique Weapons";
-  renderOperators();
-});
-
-document.getElementById("toggleNonUniqueBtn").addEventListener("click", () => {
-  hideNonUnique = !hideNonUnique;
-  document.getElementById("toggleNonUniqueBtn").textContent =
-    hideNonUnique ? "Show Non-Unique Weapons" : "Hide Non-Unique Weapons";
-  renderOperators();
 });
 
 // Initial labels
