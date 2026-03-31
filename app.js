@@ -26,6 +26,12 @@ const revealText = document.getElementById("revealText");
 
 let channel = null;
 let currentRoom = null;
+let hideAttackers = false;
+let hideDefenders = false;
+let hideMale = false;
+let hideFemale = false;
+let hideUnique = false;
+let hideNonUnique = false;
 
 // Shared game state (synced via messages)
 let state = {
@@ -69,63 +75,50 @@ function updateHostUI() {
   renderReveal();
 }
 
-function renderQuestions() {
-  questionListEl.innerHTML = "";
-  state.questions.forEach((q) => {
-    const li = document.createElement("li");
-    li.className = "question-item";
+function renderOperators() {
+  operatorsGrid.innerHTML = "";
 
-    const textDiv = document.createElement("div");
-    textDiv.className = "question-text";
-    textDiv.textContent = q.text;
+  OPERATORS.forEach((op) => {
+
+    // --- FILTER LOGIC ---
+    if (hideAttackers && op.side === "Attacker") return;
+    if (hideDefenders && op.side === "Defender") return;
+
+    if (hideMale && op.gender === "Male") return;
+    if (hideFemale && op.gender === "Female") return;
+
+    if (hideUnique && op.uniqueWeapon === true) return;
+    if (hideNonUnique && op.uniqueWeapon === false) return;
+
+    // --- CARD CREATION ---
+    const card = document.createElement("div");
+    card.className = "operator-card";
+    if (isHost) card.classList.add("host-clickable");
+    if (state.eliminated[op.name]) card.classList.add("eliminated");
+
+    const nameDiv = document.createElement("div");
+    nameDiv.className = "operator-name";
+    nameDiv.textContent = op.name;
 
     const metaDiv = document.createElement("div");
-    metaDiv.className = "question-meta";
-    metaDiv.textContent = q.askedByName
-      ? `by ${q.askedByName}`
-      : "";
+    metaDiv.className = "operator-meta";
+    metaDiv.textContent =
+      `${op.side} • ${op.role} • ${op.speed}-speed / ${op.armor}-armor • ` +
+      `${op.uniqueWeapon ? "Unique Weapon" : "No Unique Weapon"} • ${op.season}`;
 
-    const rightSide = document.createElement("div");
-    rightSide.style.display = "flex";
-    rightSide.style.alignItems = "center";
+    card.appendChild(nameDiv);
+    card.appendChild(metaDiv);
 
-    if (q.answer) {
-      const ansSpan = document.createElement("span");
-      ansSpan.style.marginLeft = "8px";
-      ansSpan.style.fontSize = "0.8rem";
-      ansSpan.textContent = `Answer: ${q.answer.toUpperCase()}`;
-      rightSide.appendChild(ansSpan);
-    } else if (isHost) {
-      const btns = document.createElement("div");
-      btns.className = "answer-buttons";
-
-      const yesBtn = document.createElement("button");
-      yesBtn.className = "answer-yes";
-      yesBtn.textContent = "Yes";
-      yesBtn.onclick = () => sendAnswer(q.id, "yes");
-
-      const noBtn = document.createElement("button");
-      noBtn.className = "answer-no";
-      noBtn.textContent = "No";
-      noBtn.onclick = () => sendAnswer(q.id, "no");
-
-      const irrelBtn = document.createElement("button");
-      irrelBtn.className = "answer-irrel";
-      irrelBtn.textContent = "Irrelevant";
-      irrelBtn.onclick = () => sendAnswer(q.id, "irrel");
-
-      btns.appendChild(yesBtn);
-      btns.appendChild(noBtn);
-      btns.appendChild(irrelBtn);
-      rightSide.appendChild(btns);
+    if (isHost) {
+      card.onclick = () => {
+        sendToggleEliminate(op.name);
+      };
     }
 
-    li.appendChild(textDiv);
-    li.appendChild(metaDiv);
-    li.appendChild(rightSide);
-    questionListEl.appendChild(li);
+    operatorsGrid.appendChild(card);
   });
 }
+
 
 function renderOperators() {
   operatorsGrid.innerHTML = "";
