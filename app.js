@@ -364,6 +364,47 @@ askBtn.addEventListener("click", askQuestion);
 questionInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") askQuestion();
 });
+document.getElementById("toggleAttackersBtn").addEventListener("click", () => {
+  hideAttackers = !hideAttackers;
+  document.getElementById("toggleAttackersBtn").textContent =
+    hideAttackers ? "Show Attackers" : "Hide Attackers";
+  renderOperators();
+});
+
+document.getElementById("toggleDefendersBtn").addEventListener("click", () => {
+  hideDefenders = !hideDefenders;
+  document.getElementById("toggleDefendersBtn").textContent =
+    hideDefenders ? "Show Defenders" : "Hide Defenders";
+  renderOperators();
+});
+
+document.getElementById("toggleMaleBtn").addEventListener("click", () => {
+  hideMale = !hideMale;
+  document.getElementById("toggleMaleBtn").textContent =
+    hideMale ? "Show Male" : "Hide Male";
+  renderOperators();
+});
+
+document.getElementById("toggleFemaleBtn").addEventListener("click", () => {
+  hideFemale = !hideFemale;
+  document.getElementById("toggleFemaleBtn").textContent =
+    hideFemale ? "Show Female" : "Hide Female";
+  renderOperators();
+});
+
+document.getElementById("toggleUniqueBtn").addEventListener("click", () => {
+  hideUnique = !hideUnique;
+  document.getElementById("toggleUniqueBtn").textContent =
+    hideUnique ? "Show Unique Weapons" : "Hide Unique Weapons";
+  renderOperators();
+});
+
+document.getElementById("toggleNonUniqueBtn").addEventListener("click", () => {
+  hideNonUnique = !hideNonUnique;
+  document.getElementById("toggleNonUniqueBtn").textContent =
+    hideNonUnique ? "Show Non-Unique Weapons" : "Hide Non-Unique Weapons";
+  renderOperators();
+});
 
 // Initial labels
 youLabel.textContent = clientId;
