@@ -67,5 +67,12 @@
   <script src="operators.js"></script>
   <script src="ably.js"></script>
   <script src="app.js"></script>
+   <script>
+    window.addEventListener("beforeunload", function (event) {
+      // Required to trigger the dialog
+      event.preventDefault();
+      event.returnValue = "";
+    });
+  </script>
 </body>
 </html>
