@@ -372,6 +372,9 @@ askBtn.addEventListener("click", askQuestion);
 questionInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") askQuestion();
 });
+window.addEventListener("beforeunload", (event) => {
+  event.returnValue = true; // Required for Chrome, Firefox, Edge
+});
 
 // Initial labels
 youLabel.textContent = clientId;
